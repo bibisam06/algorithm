@@ -3,20 +3,23 @@ import java.util.*;
 public class Solution {
     public int[] solution(int []arr) {
         
-       ArrayList<Integer> list = new ArrayList<>();
-        int prev = -1;
-
-        for (int a : arr) {
-            if (a != prev) {
-                list.add(a);
+       //queue
+        Queue<Integer> q = new ArrayDeque<>();
+        int prev = arr[0];
+        q.offer(arr[0]);
+        for(int i=1; i<arr.length; i++){
+            if(arr[i]!=prev){
+                q.offer(arr[i]); 
             }
-            prev = a;
+            prev = arr[i]; //prev update
         }
-
-        int[] answer = new int[list.size()];
-        for (int i = 0; i < list.size(); i++) {
-            answer[i] = list.get(i);
+        int[] answer = new int[q.size()];
+        int i=0; 
+        while(!q.isEmpty()){
+            answer[i] = q.poll();
+            i++;
         }
-        return answer;
+        
+        return answer; 
     }
 }
