@@ -13,12 +13,9 @@ class Solution {
         int answer = answerList.get(size); 
         return answer;
     }
-    // 가지치기 - 방문 가능 여부를 판단 해줌 
-    public boolean canVisit(int a, int k ){
-        if(k < a) return false; 
-        else return true; 
-                
-        //최소 피로도 보다 낮은 경우 false 를 반환 
+    
+    private boolean canVisit(int need, int k) { 
+    return k >= need; 
     }
     
     public void backtracking(List<Integer> ans, int k, boolean[] visited, int[][] dungeons){
