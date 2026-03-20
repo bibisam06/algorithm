@@ -1,34 +1,27 @@
 import java.util.*;
+
 class Solution {
     boolean solution(String s) {
-        boolean answer = true;
-
-        Deque<Character> q = new LinkedList(); 
-        char[] chars = s.toCharArray();
-
-        for(int i=0; i<chars.length; i++){
-            //비교하고 넣고 
-            if(!q.isEmpty()){
-                if(chars[i] == ')' && q.peek() == '('){
-                    q.pop();
-                    continue;
+        boolean answer = true; 
+        
+        char[] chars = s.toCharArray(); 
+        Deque<Character> stack = new ArrayDeque<>(); 
+        
+        for(char c : chars){
+            if(c=='('){
+                stack.push(c);
+            }else if(c==')'){
+                if(stack.isEmpty()){
+                    return false; 
                 }
-                else{
-                    q.push(chars[i]);
-                    continue; 
-                    
-                }
-                
+                stack.pop();
             }
-            q.push(chars[i]);
-        }
-
-        if(q.isEmpty()){
-            answer = true; 
-        }else{
-            answer = false; 
         }
         
-        return answer;
+        if(!stack.isEmpty()){
+            return false;
+        }
+        
+        return answer; 
     }
 }
