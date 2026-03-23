@@ -1,69 +1,95 @@
 import java.util.*;
 
 public class Main {
-public static void main(String[] args) {
-    Scanner sc = new Scanner(System.in);
-    //문자열 당 갯수 비교하기
 
-    int n = sc.nextInt();
-    int k = sc.nextInt(); //부분 문자열의 길이 - window
-    sc.nextLine();
-    String str = sc.nextLine();
+    public static void main(String[] args) {
 
-    int[] need = new int[4]; //필요한 거 저장하는 용도
-    int[] count = new int[4]; //map 대신 배열로 저장하기
-    int ans = 0;
+        Scanner sc = new Scanner(System.in);
 
-    for(int i=0; i<4; i++) {
-        need[i] = sc.nextInt();
-    }
+        int s = sc.nextInt();
+        int p = sc.nextInt();
 
-    boolean isOk = true;
+        String input = sc.next();
 
-    for(int i=0; i<k; i++){
-        count[index(str.charAt(i))] ++;
-    }
+        int[] need = new int[4];
+        int[] has = new int[4];
 
-    for(int i=0; i<4; i++){
-        if(count[i] < need[i]) {
-            isOk = false;
-            break;
+        for(int i=0; i<4; i++){
+            need[i] = sc.nextInt();
         }
-    }
 
-    if(isOk){
-        ans++;
-    }
+        char[] dna = input.toCharArray();
 
-
-    for(int i=k; i<n; i++){
-        count[index(str.charAt(i-k))] --; //
-        count[index(str.charAt(i))] ++;
-
-        isOk = true;
-
-        for(int j=0; j<4; j++){
-            if (count[j] < need[j]) {
-                isOk = false;
-                break;
+        // 첫 P개 계산
+        for(int i=0; i<p; i++){
+            switch(dna[i]){
+                case 'A':
+                    has[0]++;
+                    break;
+                case 'C':
+                    has[1]++;
+                    break;
+                case 'G':
+                    has[2]++;
+                    break;
+                case 'T':
+                    has[3]++;
+                    break;
             }
         }
 
-        if(isOk){
-            ans++;
+        int count = 0;
+
+        // 첫 윈도우 검사
+        if(check(has, need)) count++;
+
+        // 슬라이딩
+        for(int i=p; i<s; i++){
+            char add = dna[i];
+            char remove = dna[i-p];
+
+            // 들어오는 문자 추가
+            switch(add){
+                case 'A':
+                    has[0]++;
+                    break;
+                case 'C':
+                    has[1]++;
+                    break;
+                case 'G':
+                    has[2]++;
+                    break;
+                case 'T':
+                    has[3]++;
+                    break;
+            }
+
+            // 빠지는 문자 제거
+            switch(remove){
+                case 'A':
+                    has[0]--;
+                    break;
+                case 'C':
+                    has[1]--;
+                    break;
+                case 'G':
+                    has[2]--;
+                    break;
+                case 'T':
+                    has[3]--;
+                    break;
+            }
+
+            if(check(has, need)) count++;
         }
+
+        System.out.println(count);
     }
 
-    System.out.println(ans);
-
-}
-
-static int index(Character ch){
-    return switch (ch) {
-        case 'A' -> 0;
-        case 'C' -> 1;
-        case 'G' -> 2;
-        default -> 3; // 'T'
-    };
-}
+    public static boolean check(int[] has, int[] need){
+        for(int i=0; i<4; i++){
+            if(has[i] < need[i]) return false;
+        }
+        return true;
+    }
 }
