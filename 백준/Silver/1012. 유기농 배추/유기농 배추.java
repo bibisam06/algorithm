@@ -1,61 +1,64 @@
+//package bfs.silver.Num1012;
+
 import java.util.*;
-
+import java.io.*;
+/*
+1012 : 유기농배추 (실버2)
+ */
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        int t = sc.nextInt();
-        for(int j=0; j<t; j++){
-            int m = sc.nextInt(); // 가로
-            int n = sc.nextInt(); // 세로
-            int k = sc.nextInt();
+        int t = Integer.parseInt(br.readLine());
+        for(int i=0; i<t; i++){
+            StringTokenizer stk = new StringTokenizer(br.readLine());
 
-            boolean[][] visited = new boolean[n][m];
-            int[][] map = new int[n][m];
-            int[][] cabbage = new int[k][2];
-            int answer = 0;
+            int m = Integer.parseInt(stk.nextToken());
+            int n = Integer.parseInt(stk.nextToken());
+            int k = Integer.parseInt(stk.nextToken());
 
-            for (int i = 0; i < k; i++) {
-                int x = sc.nextInt();
-                int y = sc.nextInt();
-                map[y][x] = 1;
-                cabbage[i][0] = y; // row
-                cabbage[i][1] = x; // col
+            int[][] map = new int[m][n];
+            boolean[][] visited = new boolean[m][n];
+
+            int counter = 0;
+            for(int j = 0; j <k; j++){
+                StringTokenizer stk2 = new StringTokenizer(br.readLine());
+                int x = Integer.parseInt(stk2.nextToken());
+                int y = Integer.parseInt(stk2.nextToken());
+                map[x][y] = 1;
             }
 
-            for (int i = 0; i < k; i++) {
-                int y = cabbage[i][0];
-                int x = cabbage[i][1];
-
-                if (!visited[y][x]) {
-                    bfs(map, visited, y, x, n, m);
-                    answer++;
+            for(int j=0; j<m; j++){
+                for(int j2 = 0; j2<n; j2++){
+                    if(!visited[j][j2] && map[j][j2] == 1){
+                        counter++;
+                        bfs(map, j, j2, visited);
+                    }
                 }
             }
 
-            System.out.println(answer);
+            System.out.println(counter);
         }
     }
 
-    static void bfs(int[][] map, boolean[][] visited, int y, int x, int n, int m) {
+    static void bfs(int[][] map, int x, int y, boolean[][] visited){
         Queue<int[]> queue = new ArrayDeque<>();
-        queue.offer(new int[]{y, x});
-        visited[y][x] = true;
 
-        int[] dy = {-1, 1, 0, 0};
-        int[] dx = {0, 0, -1, 1};
+        visited[x][y] = true;
+        queue.add(new int[]{x, y});
 
-        while (!queue.isEmpty()) {
+        while(!queue.isEmpty()){
             int[] cur = queue.poll();
+            int[] dx = {-1, 1, 0, 0};
+            int[] dy = {0, 0, -1, 1};
 
-            for (int i = 0; i < 4; i++) {
-                int ny = cur[0] + dy[i];
-                int nx = cur[1] + dx[i];
+            for(int i=0; i<4; i++){
+                int nx = cur[0] + dx[i];
+                int ny = cur[1] + dy[i];
 
-                if (ny >= 0 && ny < n && nx >= 0 && nx < m
-                        && map[ny][nx] == 1 && !visited[ny][nx]) {
-                    visited[ny][nx] = true;
-                    queue.offer(new int[]{ny, nx});
+                if(nx >= 0 && nx < map.length && ny >= 0 && ny < map[0].length && !visited[nx][ny] && map[nx][ny] == 1){
+                    visited[nx][ny] = true;
+                    queue.add(new int[]{nx, ny});
                 }
             }
         }
