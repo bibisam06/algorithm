@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="115cb85c-5120-405c-a062-96748351ec47" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.github/workflows/move-file-to-leet-code.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/move-file-to-leet-code.yml" afterDir="false" />
@@ -77,7 +80,7 @@
       <option name="presentableId" value="Default" />
       <updated>1776946146667</updated>
       <workItem from="1776946147764" duration="245000" />
-      <workItem from="1776946396421" duration="330000" />
+      <workItem from="1776946396421" duration="779000" />
     </task>
     <servers />
   </component>
