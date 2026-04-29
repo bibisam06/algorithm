@@ -1,17 +1,18 @@
 import java.util.*; 
 
 class Solution {
-    public char[] reverseString(char[] s) {
+    public void reverseString(char[] s) {
         char[] chars = new char[s.length];
         Deque<Character> stack = new ArrayDeque<>();
         for(char c : s){
-            stack.add(c);
+            stack.push(c);
         }
         int index = 0;
+        System.out.println(stack);
         while(!stack.isEmpty()){
-            chars[index] = stack.offer();
+            s[index] = (char)stack.pop();
             index++; 
         }
-        return chars;
+        
     }
 }

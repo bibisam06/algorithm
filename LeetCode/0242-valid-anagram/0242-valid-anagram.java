@@ -2,45 +2,33 @@ import java.util.*;
 
 class Solution {
     public boolean isAnagram(String s, String t) {
-        boolean flag = true; 
-        Map<Character, Integer> mapS = new HashMap<>();
-        Map<Character, Integer> mapT = new HashMap<>();
-        Set<Character> setS = new HashSet<>();
-        Set<Character> setT = new HashSet<>();
-        
+        Map<Character, Integer> map1 = new HashMap<>();
+        Map<Character, Integer> map2 = new HashMap<>();
 
-        char[] charS = s.toCharArray();
-        char[] charT = t.toCharArray();
+        char[] chars1 = s.toCharArray();
+        char[] chars2 = t.toCharArray();
 
-        int n1 = charS.length; 
-        int n2 = charT.length; 
-        
-        if(n1 != n2) return false; 
+        if(chars1.length != chars2.length) return false;
 
-        for(int i=0; i<charS.length; i++){
-            mapS.put(charS[i], mapS.getOrDefault(charS[i], 0) + 1);
-            setS.add(charS[i]);
+        for(int i=0; i<chars1.length; i++){
+            map1.put(chars1[i], map1.getOrDefault(chars1[i], 0) + 1);
         }
 
-        for(int i=0; i<charT.length; i++){
-            mapT.put(charT[i], mapT.getOrDefault(charT[i], 0) + 1); 
-            setT.add(charT[i]);
+        for(int i=0; i<chars2.length; i++){
+            map2.put(chars2[i], map2.getOrDefault(chars2[i], 0) + 1); 
         }
 
-        for(Character c : setT){
-            int target = mapT.get(c);
-            if(!setS.contains(c)){
-                flag = false; 
-                break;
-            }
+        for(Character key : map2.keySet()){ 
+            //keySet -> Set 
+            Set<Character> set1 = map1.keySet();
+            if(!set1.contains(key)) return false;
 
-            int string = mapS.get(c);
-            if(string!=target){
-                flag= false;
-                break;
-            }
+            int first = map1.get(key);
+            int second = map2.get(key);
+
+            if(first!=second) return false;
+            
         }
-
-        return flag;
+        return true;
     }
 }
