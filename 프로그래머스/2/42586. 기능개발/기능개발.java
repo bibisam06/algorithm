@@ -2,33 +2,42 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
-        List<Integer> result = new ArrayList<>();
+        int n = speeds.length; 
         
-        // 각 기능 완료까지 걸리는 일수 계산
-        int[] days = new int[progresses.length];
-        for(int i=0; i<progresses.length; i++){
-            days[i] = (int) Math.ceil((100.0 - progresses[i]) / speeds[i]);
-        }
-        
-        int prev = days[0];
-        int count = 1;
-        
-        for(int i=1; i<days.length; i++){
-            if(days[i] <= prev){ 
-                count++; // 같은 배포 묶음
-            }else{
-                result.add(count); // 이전 묶음 확정
-                count = 1; 
-                prev = days[i];
+        int[] days = new int[n];
+        int day = 0; 
+        for(int i=0; i<n; i++){
+            int total = progresses[i];
+            while(total + speeds[i] * day < 100 ){
+                day++;
             }
-        }
-        result.add(count); // 마지막 묶음 추가
+            days[i] = day;
+            day=0;
+        } //days구하기 
         
-        // 리스트 → 배열 변환
-        int[] answer = new int[result.size()];
-        for(int i=0; i<result.size(); i++){
-            answer[i] = result.get(i);
+        int top = days[0];
+        int yeon = 1;
+        
+        ArrayList<Integer> list = new ArrayList<>();
+        
+        //days -> 배포일구하기
+        for(int i=1; i<n; i++){
+            if(days[i] <= top){
+                yeon++;
+            }else{
+                top = days[i];
+                list.add(yeon);
+                yeon = 1;
+            }
+            
         }
+        list.add(yeon);
+        
+        int[] answer = new int[list.size()];
+        for(int i=0; i<list.size(); i++){
+            answer[i] = list.get(i);
+        }
+        
         return answer;
     }
 }
