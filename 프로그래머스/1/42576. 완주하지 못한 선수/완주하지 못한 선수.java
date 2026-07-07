@@ -1,28 +1,25 @@
-import java.util.*;
+import java.util.*; 
 
 class Solution {
     public String solution(String[] participant, String[] completion) {
-    
+        String answer = "";
+            
+        Map<String,Integer> map = new HashMap<>();
         
-        Map<String, Integer> map = new HashMap<>();
-        
-        // 참가자 이름 카운트
-        for(String p : participant){
-            map.put(p, map.getOrDefault(p, 0) + 1);
+        for(int i=0; i<participant.length; i++){
+            map.put(participant[i], map.getOrDefault(participant[i],0) + 1);
         }
         
-         // 완주자 이름 카운트 차감
-        for(String c : completion){
-            map.put(c, map.get(c) - 1);
+        for(int i=0; i<completion.length; i++){
+            String player = completion[i];
+            map.put(player, map.get(player) - 1);
         }
         
-        // 남은 값이 1인 사람이 완주하지 못한 선수
         for(String key : map.keySet()){
-            if(map.get(key) > 0){
-                return key;
+            if(map.get(key) != 0){
+                answer = key;
             }
         }
-        
-        return ""; // 모든 참가자가 완주한 경우 (사실 문제에서는 없음)
+        return answer;
     }
 }
