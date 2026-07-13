@@ -1,50 +1,43 @@
-import java.util.*;
+import java.util.*; 
 
 class Solution {
-    public int[] solution(String[] id_list, String[] report, int k) { 
-        int[] answer = new int[id_list.length];
-        Arrays.fill(answer, 0);
-
-        // 각 유저의 인덱스 저장
-        Map<String, Integer> user_id = new LinkedHashMap<>(); 
-        // 각 유저가 신고당한 횟수
-        Map<String, Integer> report_count = new HashMap<>();
-        // 각 유저가 신고한 사람 목록
-        Map<String, List<String>> mail_list = new HashMap<>();
-
-        // 초기화
-        for(int i=0; i<id_list.length; i++){
-            user_id.put(id_list[i], i);
-            report_count.put(id_list[i], 0);
-            mail_list.put(id_list[i], new ArrayList<>());
-        } 
-
-        // 신고 처리
-        for(String r : report){
-            String[] split_data = r.split(" "); 
-            String reporter = split_data[0];
-            String reported = split_data[1];
-
-            List<String> reporters = mail_list.get(reported);
-
-            if(!reporters.contains(reporter)){
-                reporters.add(reporter);
-                report_count.put(reported, report_count.get(reported) + 1);
+    public int[] solution(String[] id_list, String[] report, int k) {
+        int n = id_list.length; 
+        
+        Map<String, List<String>> map1 = new HashMap<>();
+        Map<String, Integer> map2 = new HashMap<>();
+        
+        int[] answer = new int[n];
+        
+        for(int i=0; i<report.length; i++){
+            String[] splited = report[i].split(" ");
+            String from = splited[0];
+            String to = splited[1];
+            
+            if(map1.containsKey(from) && map1.get(from).contains(to)) {
+                continue; 
             }
+            
+            if(!map1.containsKey(from)) map1.put(from , new ArrayList<>());
+            map1.get(from).add(to); 
+            
+            map2.put(to, map2.getOrDefault(to, 0) + 1); //to -> 횟수 넣어두기 .. 
         }
-
-        // k번 이상 신고당한 사람의 신고자에게 메일 발송
-        for(String key : report_count.keySet()){
-            int count = report_count.get(key);
-            if(count >= k){
-                List<String> list2 = mail_list.get(key);
-                for(String s : list2){
-                    int index = user_id.get(s);
-                    answer[index]++;
+        
+        for(int i=0; i<n; i++){
+            String target = id_list[i];
+            List<String> number = map1.getOrDefault(target, new ArrayList<>()); 
+            int counter = 0; 
+            
+            for(String str : number){
+                if(map2.get(str) >= k){
+                    counter++;
                 }
             }
+            
+            answer[i] = counter;
         }
-
+        
         return answer;
     }
 }
