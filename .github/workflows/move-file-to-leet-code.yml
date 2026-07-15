@@ -32,9 +32,9 @@ jobs:
             if [ -d "$d" ]; then
               target="LeetCode/$d"
 
-              if [ -e "$target" ]; then
-                echo "Target already exists, skipping: $target"
-                continue
+              if [ -d "$target" ]; then
+                echo "Replacing existing directory: $target"
+                rm -rf "$target"
               fi
 
               echo "Moving $d -> $target"
@@ -53,8 +53,9 @@ jobs:
           set -euo pipefail
 
           if git status --porcelain | grep .; then
-            git config user.name 'github-actions[bot]'
-            git config user.email 'github-actions[bot]@users.noreply.github.com'
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+
             git add -A
             git commit -m "chore: move LeetCode solutions to LeetCode folder"
             git push origin HEAD:${GITHUB_REF_NAME}
