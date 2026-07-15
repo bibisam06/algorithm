@@ -1,43 +1,44 @@
-import java.util.*; 
+import java.util.*;
 
 class MinStack {
-
+    
     Deque<Integer> stack;
+    Deque<Integer> minStack;
 
     public MinStack() {
-        this.stack = new ArrayDeque<>(); //초기화함 
+        stack = new ArrayDeque<>();
+        minStack = new ArrayDeque<>();    
     }
     
-    public void push(int val) {
-        stack.offerLast(val);
+    public void push(int value) {
+        stack.push(value);
+        if(minStack.isEmpty() || minStack.peek() >= value){
+            minStack.push(value);
+        }
     }
     
-    public void pop() { 
-        stack.removeLast();
+    public void pop() {
+        int value = stack.peek();
+
+        if(value==minStack.peek()){
+            minStack.pop();
+        }
+        stack.pop();
     }
     
     public int top() {
-        return stack.peekLast(); 
+        return stack.peek();
     }
     
     public int getMin() {
-        //always non empty
-        int answer = Integer.MAX_VALUE;
-        int n = stack.size();
-
-        for(int i=0; i<n; i++){
-            int out = stack.removeFirst();
-            answer = Math.min(answer, out);
-            stack.offerLast(out);
-        }
-        return answer;
+        return minStack.peek();
     }
 }
 
 /**
  * Your MinStack object will be instantiated and called as such:
  * MinStack obj = new MinStack();
- * obj.push(val);
+ * obj.push(value);
  * obj.pop();
  * int param_3 = obj.top();
  * int param_4 = obj.getMin();
@@ -45,4 +46,4 @@ class MinStack {
 
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
-// Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
+// Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
