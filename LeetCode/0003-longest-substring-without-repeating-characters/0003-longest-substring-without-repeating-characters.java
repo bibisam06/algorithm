@@ -2,24 +2,26 @@ import java.util.*;
 
 class Solution {
     public int lengthOfLongestSubstring(String s) {
-        int n = s.length();
-        Set<Character> set = new HashSet<>();
-        
-        int maxLength = 0;
-        int left = 0;
+        char[] str = s.toCharArray();
+        int n = str.length;
 
-        for(int right=0; right<n; right++){
-            char c = s.charAt(right);
-            
+        int answer = 0;
+        int index1 = 0;
+        Set<Character> set = new HashSet<>();
+
+        for(int i=0; i<n; i++){
+            char c = str[i];
             while(set.contains(c)){
-                set.remove(s.charAt(left));
-                left ++;
+                
+                set.remove(str[index1]);//앞에서 계속지워나감
+                index1 ++;
             }
-            set.add(c);
-            maxLength = Math.max(maxLength, right - left + 1); //최대 길이 갱신
+
+            set.add(str[i]);
+            answer = Math.max(set.size(), answer);
         }
 
-        return maxLength;
+        return answer;
     }
 }
 
