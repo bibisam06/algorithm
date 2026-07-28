@@ -36,6 +36,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "main",
     "junie.onboarding.icon.badge.shown": "true",
     "last_opened_file_path": "/Users/bibi/bibicode/study/algorithm",
     "node.js.detected.package.eslint": "true",
@@ -85,7 +86,8 @@
       <workItem from="1777955978191" duration="2000" />
       <workItem from="1783562098454" duration="7127000" />
       <workItem from="1783733416581" duration="2000" />
-      <workItem from="1784080371886" duration="2306000" />
+      <workItem from="1784080371886" duration="3834000" />
+      <workItem from="1785133155954" duration="32000" />
     </task>
     <servers />
   </component>
